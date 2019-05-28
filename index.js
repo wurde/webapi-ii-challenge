@@ -31,6 +31,7 @@ app.use(cors())
  */
 
 app.use('/', require('./routes/root_router'))
+app.use('/api/posts', require('./routes/posts_router'))
 
 /**
  * Start server
