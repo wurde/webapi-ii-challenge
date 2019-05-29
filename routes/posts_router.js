@@ -121,9 +121,15 @@ router.post('/:id/comments', async (req, res) => {
     let posts = await db.findById(req.params.id)
 
     if (posts.length > 0) {
-      if (!req.body.text) {
-        await db.insertComment(req.body)
-        res.status(201).json({ error: { message: 'There was an error while saving the comment to the database.' }})
+      if (req.body && req.body.text) {
+        let results = await db.insertComment({ post_id: req.params.id, text: req.body.text })
+
+        if (results && results.id) {
+          let comment = await db.findCommentById(results.id)
+          res.status(201).json(comment[0])
+        } else {
+          res.status(400).json({ error: { message: 'Invalid comment data provided.' }})
+        }
       } else {
         res.status(400).json({ error: { message: 'Please provide text for the comment.' }})
       }

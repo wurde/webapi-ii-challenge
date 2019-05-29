@@ -123,6 +123,7 @@ When the client makes a `POST` request to `/api/posts/:id/comments`:
   - return the newly created _comment_.
 
 - If there's an error while saving the _comment_:
+
   - cancel the request.
   - respond with HTTP status code `500` (Server Error).
   - return the following JSON object: `{ error: "There was an error while saving the comment to the database" }`.
